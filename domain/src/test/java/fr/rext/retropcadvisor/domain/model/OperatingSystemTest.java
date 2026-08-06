@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
 
-public class OperatingSystemTest {
+class OperatingSystemTest {
 
   @Test
   void should_expose_all_supported_operating_systems() {

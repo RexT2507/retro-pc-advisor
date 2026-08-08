@@ -1,30 +1,20 @@
 package fr.rext.retropcadvisor.domain.model;
 
-import java.util.Objects;
 import java.util.UUID;
 
 /**
- * Repérente un composant matériel connu du référentiel.
+ * Composant matériel pouvant appartenir à une configuration PC.
+ * <p>
+ * L'interface est scellée afin que le domaine maîtrise explicitement les différentes
+ * représentations possibles d'un composant.
  */
-public record HardwareComponent(
-    UUID id,
-    HardwareComponentType type,
-    String manufacturer,
-    String model
-) {
+public sealed interface HardwareComponent permits GenericHardwareComponent, MemoryModule {
 
-  public HardwareComponent {
-    Objects.requireNonNull(id, "id must not be null");
-    Objects.requireNonNull(type, "type must not be null");
-    Objects.requireNonNull(manufacturer, "manufacturer must not be null");
-    Objects.requireNonNull(model, "model must not be null");
+  UUID id();
 
-    if (manufacturer.isBlank()) {
-      throw new IllegalArgumentException("manufacturer must not be blank");
-    }
+  HardwareComponentType type();
 
-    if (model.isBlank()) {
-      throw new IllegalArgumentException("model must not be blank");
-    }
-  }
+  String manufacturer();
+
+  String model();
 }

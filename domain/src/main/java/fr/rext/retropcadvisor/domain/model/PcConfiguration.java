@@ -28,7 +28,8 @@ public record PcConfiguration(
       throw new IllegalArgumentException("name must not be blank");
     }
 
-    // Cela empêche le code extérieur de modifier la configuration après sa construction.
+    // Empêche le code extérieur de modifier la configuration
+    // après sa construction.
     components = List.copyOf(components);
 
     validateUniqueComponentIds(components);
@@ -44,39 +45,78 @@ public record PcConfiguration(
    * <p>
    * Cette méthode est utile pour les catégories multiples, comme la mémoire ou le stockage.
    */
-  public List<HardwareComponent> componentsOfType(HardwareComponentType type) {
+  public List<HardwareComponent> componentsOfType(
+      HardwareComponentType type
+  ) {
     Objects.requireNonNull(type, "type must not be null");
-    return components.stream().filter(component -> component.type() == type).toList();
+
+    return components.stream()
+        .filter(component -> component.type() == type)
+        .toList();
   }
 
   /**
    * Retourne l'unique composant correspondant à une catégorie.
    * <p>
-   * Cette méthode est adaptée au CPU, au GPU, à la carte mère et la carte son.
+   * Cette méthode est adaptée au CPU, au GPU, à la carte mère et à la carte son.
    */
-  public Optional<HardwareComponent> componentOfType(HardwareComponentType type) {
+  public Optional<HardwareComponent> componentOfType(
+      HardwareComponentType type
+  ) {
     Objects.requireNonNull(type, "type must not be null");
-    return components.stream().filter(component -> component.type() == type).findFirst();
+
+    return components.stream()
+        .filter(component -> component.type() == type)
+        .findFirst();
   }
 
-  private static void validateUniqueComponentIds(List<HardwareComponent> components) {
-    Set<UUID> componentIds = components.stream().map(HardwareComponent::id)
+  /**
+   * Calcule la quantité totale de mémoire installée.
+   */
+  public Optional<MemoryCapacity> totalMemoryCapacity() {
+    long totalMegabytes = components.stream()
+        .filter(MemoryModule.class::isInstance)
+        .map(MemoryModule.class::cast)
+        .mapToLong(memoryModule ->
+            memoryModule.capacity().megabytes()
+        )
+        .sum();
+
+    if (totalMegabytes == 0) {
+      return Optional.empty();
+    }
+
+    return Optional.of(
+        MemoryCapacity.ofMegabytes(totalMegabytes)
+    );
+  }
+
+  private static void validateUniqueComponentIds(
+      List<HardwareComponent> components
+  ) {
+    Set<UUID> componentIds = components.stream()
+        .map(HardwareComponent::id)
         .collect(Collectors.toSet());
 
     if (componentIds.size() != components.size()) {
-      throw new IllegalArgumentException("component ids must be null");
+      throw new IllegalArgumentException(
+          "component ids must be unique"
+      );
     }
   }
 
-  private static void validateSingleComponent(List<HardwareComponent> components,
-      HardwareComponentType type) {
+  private static void validateSingleComponent(
+      List<HardwareComponent> components,
+      HardwareComponentType type
+  ) {
     long count = components.stream()
         .filter(component -> component.type() == type)
         .count();
 
     if (count > 1) {
       throw new IllegalArgumentException(
-          "configuration must contain at most one component of type " + type
+          "configuration must contain at most one component of type "
+              + type
       );
     }
   }

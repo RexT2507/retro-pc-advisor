@@ -6,13 +6,13 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import java.util.UUID;
 import org.junit.jupiter.api.Test;
 
-public class HardwareComponentTest {
+class HardwareComponentTest {
 
   @Test
   void should_create_a_valid_hardware_component() {
     var id = UUID.randomUUID();
 
-    var component = new HardwareComponent(id, HardwareComponentType.CPU, "Intel",
+    var component = new GenericHardwareComponent(id, HardwareComponentType.CPU, "Intel",
         "Pentium III 800");
 
     assertThat(component.id()).isEqualTo(id);
@@ -23,15 +23,16 @@ public class HardwareComponentTest {
 
   @Test
   void should_reject_null_id() {
-    assertThatThrownBy(() -> new HardwareComponent(null, HardwareComponentType.CPU, "Intel",
+    assertThatThrownBy(() -> new GenericHardwareComponent(null, HardwareComponentType.CPU, "Intel",
         "Pentium III 800")).isInstanceOf(NullPointerException.class)
         .hasMessage("id must not be null");
   }
 
   @Test
   void should_reject_blank_manufacturer() {
-    assertThatThrownBy(() -> new HardwareComponent(
-        UUID.randomUUID(),
+    var componentId = UUID.randomUUID();
+    assertThatThrownBy(() -> new GenericHardwareComponent(
+        componentId,
         HardwareComponentType.GPU,
         " ",
         "GeForce 2 MX"
@@ -42,8 +43,9 @@ public class HardwareComponentTest {
 
   @Test
   void should_reject_blank_model() {
-    assertThatThrownBy(() -> new HardwareComponent(
-        UUID.randomUUID(),
+    var componentId = UUID.randomUUID();
+    assertThatThrownBy(() -> new GenericHardwareComponent(
+        componentId,
         HardwareComponentType.SOUND_CARD,
         "Creative",
         ""

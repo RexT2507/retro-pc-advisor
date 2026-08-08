@@ -12,16 +12,16 @@ class PcConfigurationTest {
 
   @Test
   void should_create_a_pc_configuration() {
-    var cpu = component(
+    var cpu = genericComponent(
         HardwareComponentType.CPU,
         "Intel",
         "Pentium III 800"
     );
 
-    var memory = component(
-        HardwareComponentType.MEMORY,
+    var memory = memoryModule(
         "Kingston",
-        "SDRAM 128 MB"
+        "SDRAM 128 MB",
+        128
     );
 
     var configuration = new PcConfiguration(
@@ -58,7 +58,7 @@ class PcConfigurationTest {
         components
     );
 
-    components.add(component(
+    components.add(genericComponent(
         HardwareComponentType.CPU,
         "Intel",
         "Pentium II"
@@ -68,30 +68,33 @@ class PcConfigurationTest {
 
     var immutableComponents = configuration.components();
 
-    assertThatThrownBy(immutableComponents::clear).isInstanceOf(
-        UnsupportedOperationException.class);
+    assertThatThrownBy(immutableComponents::clear)
+        .isInstanceOf(UnsupportedOperationException.class);
   }
 
   @Test
   void should_reject_duplicate_component_ids() {
     var componentId = UUID.randomUUID();
 
-    var firstMemoryModule = new HardwareComponent(
+    var firstMemoryModule = new MemoryModule(
         componentId,
-        HardwareComponentType.MEMORY,
         "Kingston",
-        "SDRAM 128 MB"
+        "SDRAM 128 MB",
+        MemoryCapacity.ofMegabytes(128)
     );
 
-    var secondMemoryModule = new HardwareComponent(
+    var secondMemoryModule = new MemoryModule(
         componentId,
-        HardwareComponentType.MEMORY,
         "Kingston",
-        "SDRAM 256 MB"
+        "SDRAM 256 MB",
+        MemoryCapacity.ofMegabytes(256)
     );
 
     var configurationId = UUID.randomUUID();
-    var components = List.of(firstMemoryModule, secondMemoryModule);
+    var components = List.<HardwareComponent>of(
+        firstMemoryModule,
+        secondMemoryModule
+    );
 
     assertThatThrownBy(() -> new PcConfiguration(
         configurationId,
@@ -99,25 +102,27 @@ class PcConfigurationTest {
         components
     ))
         .isInstanceOf(IllegalArgumentException.class)
-        .hasMessage("component ids must be null");
+        .hasMessage("component ids must be unique");
   }
 
   @Test
   void should_reject_more_than_one_cpu() {
-    var firstCpu = component(
+    var firstCpu = genericComponent(
         HardwareComponentType.CPU,
         "Intel",
         "Pentium III 800"
     );
 
-    var secondCpu = component(
+    var secondCpu = genericComponent(
         HardwareComponentType.CPU,
         "AMD",
         "Athlon 800"
     );
 
     var configurationId = UUID.randomUUID();
-    var components = List.of(firstCpu, secondCpu);
+
+    List<HardwareComponent> components =
+        List.of(firstCpu, secondCpu);
 
     assertThatThrownBy(() -> new PcConfiguration(
         configurationId,
@@ -132,16 +137,16 @@ class PcConfigurationTest {
 
   @Test
   void should_allow_multiple_memory_modules() {
-    var firstMemoryModule = component(
-        HardwareComponentType.MEMORY,
+    var firstMemoryModule = memoryModule(
         "Kingston",
-        "SDRAM 128 MB"
+        "SDRAM 128 MB",
+        128
     );
 
-    var secondMemoryModule = component(
-        HardwareComponentType.MEMORY,
+    var secondMemoryModule = memoryModule(
         "Crucial",
-        "SDRAM 256 MB"
+        "SDRAM 256 MB",
+        256
     );
 
     var configuration = new PcConfiguration(
@@ -157,7 +162,7 @@ class PcConfigurationTest {
 
   @Test
   void should_find_the_cpu() {
-    var cpu = component(
+    var cpu = genericComponent(
         HardwareComponentType.CPU,
         "Intel",
         "Pentium III 800"
@@ -187,16 +192,64 @@ class PcConfigurationTest {
     )).isEmpty();
   }
 
-  private static HardwareComponent component(
+  @Test
+  void should_calculate_total_memory_capacity() {
+    var firstModule = memoryModule(
+        "Kingston",
+        "SDRAM 128 MB",
+        128
+    );
+
+    var secondModule = memoryModule(
+        "Crucial",
+        "SDRAM 256 MB",
+        256
+    );
+
+    var configuration = new PcConfiguration(
+        UUID.randomUUID(),
+        "Windows XP PC",
+        List.of(firstModule, secondModule)
+    );
+
+    assertThat(configuration.totalMemoryCapacity())
+        .contains(MemoryCapacity.ofMegabytes(384));
+  }
+
+  @Test
+  void should_return_empty_when_no_memory_is_installed() {
+    var configuration = new PcConfiguration(
+        UUID.randomUUID(),
+        "Incomplete PC",
+        List.of()
+    );
+
+    assertThat(configuration.totalMemoryCapacity()).isEmpty();
+  }
+
+  private static GenericHardwareComponent genericComponent(
       HardwareComponentType type,
       String manufacturer,
       String model
   ) {
-    return new HardwareComponent(
+    return new GenericHardwareComponent(
         UUID.randomUUID(),
         type,
         manufacturer,
         model
+    );
+  }
+
+  private static MemoryModule memoryModule(
+      String manufacturer,
+      String model,
+      long megabytes
+  ) {
+    return new MemoryModule(
+        UUID.randomUUID(),
+        manufacturer,
+        model,
+        MemoryCapacity.ofMegabytes(megabytes)
     );
   }
 }

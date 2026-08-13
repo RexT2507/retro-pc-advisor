@@ -91,6 +91,13 @@ public record PcConfiguration(
     );
   }
 
+  /**
+   * Calcule la fréquence du processeur installée.
+   */
+  public Optional<Cpu> cpu() {
+    return components.stream().filter(Cpu.class::isInstance).map(Cpu.class::cast).findFirst();
+  }
+
   private static void validateUniqueComponentIds(
       List<HardwareComponent> components
   ) {

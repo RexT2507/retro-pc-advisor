@@ -12,10 +12,10 @@ class PcConfigurationTest {
 
   @Test
   void should_create_a_pc_configuration() {
-    var cpu = genericComponent(
-        HardwareComponentType.CPU,
+    var cpu = cpu(
         "Intel",
-        "Pentium III 800"
+        "Pentium III 800",
+        800
     );
 
     var memory = memoryModule(
@@ -58,10 +58,10 @@ class PcConfigurationTest {
         components
     );
 
-    components.add(genericComponent(
-        HardwareComponentType.CPU,
+    components.add(cpu(
         "Intel",
-        "Pentium II"
+        "Pentium II",
+        450
     ));
 
     assertThat(configuration.components()).isEmpty();
@@ -107,16 +107,16 @@ class PcConfigurationTest {
 
   @Test
   void should_reject_more_than_one_cpu() {
-    var firstCpu = genericComponent(
-        HardwareComponentType.CPU,
+    var firstCpu = cpu(
         "Intel",
-        "Pentium III 800"
+        "Pentium III 800",
+        800
     );
 
-    var secondCpu = genericComponent(
-        HardwareComponentType.CPU,
+    var secondCpu = cpu(
         "AMD",
-        "Athlon 800"
+        "Athlon 800",
+        800
     );
 
     var configurationId = UUID.randomUUID();
@@ -162,10 +162,10 @@ class PcConfigurationTest {
 
   @Test
   void should_find_the_cpu() {
-    var cpu = genericComponent(
-        HardwareComponentType.CPU,
+    var cpu = cpu(
         "Intel",
-        "Pentium III 800"
+        "Pentium III 800",
+        800
     );
 
     var configuration = new PcConfiguration(
@@ -227,17 +227,12 @@ class PcConfigurationTest {
     assertThat(configuration.totalMemoryCapacity()).isEmpty();
   }
 
-  private static GenericHardwareComponent genericComponent(
-      HardwareComponentType type,
+  private static Cpu cpu(
       String manufacturer,
-      String model
+      String model,
+      long megahertz
   ) {
-    return new GenericHardwareComponent(
-        UUID.randomUUID(),
-        type,
-        manufacturer,
-        model
-    );
+    return new Cpu(UUID.randomUUID(), manufacturer, model, CpuFrequency.ofMegahertz(megahertz));
   }
 
   private static MemoryModule memoryModule(

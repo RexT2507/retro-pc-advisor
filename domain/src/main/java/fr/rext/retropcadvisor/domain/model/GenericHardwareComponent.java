@@ -31,5 +31,9 @@ public record GenericHardwareComponent(
     if (type == HardwareComponentType.MEMORY) {
       throw new IllegalArgumentException("memory components must use MemoryModule");
     }
+
+    if (type == HardwareComponentType.CPU) {
+      throw new IllegalArgumentException("cpu components must use Cpu");
+    }
   }
 }

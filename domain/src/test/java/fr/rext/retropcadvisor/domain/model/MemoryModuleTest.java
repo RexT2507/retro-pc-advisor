@@ -54,4 +54,20 @@ class MemoryModuleTest {
         .isInstanceOf(IllegalArgumentException.class)
         .hasMessage("manufacturer must not be blank");
   }
+
+  @Test
+  void should_reject_memory_as_generic_hardware_component() {
+    var componentId = UUID.randomUUID();
+
+    assertThatThrownBy(() ->
+        new GenericHardwareComponent(
+            componentId,
+            HardwareComponentType.MEMORY,
+            "Kingston",
+            "SDRAM"
+        )
+    )
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessage("memory components must use MemoryModule");
+  }
 }

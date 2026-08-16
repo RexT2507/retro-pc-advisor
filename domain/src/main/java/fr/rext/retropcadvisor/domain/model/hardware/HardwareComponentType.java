@@ -1,4 +1,4 @@
-package fr.rext.retropcadvisor.domain.model;
+package fr.rext.retropcadvisor.domain.model.hardware;
 
 /**
  * Catégorie de composants matériels prises en charge par le référentiel de compatibilité.

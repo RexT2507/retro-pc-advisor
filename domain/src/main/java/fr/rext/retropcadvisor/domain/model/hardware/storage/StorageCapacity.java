@@ -1,4 +1,4 @@
-package fr.rext.retropcadvisor.domain.model;
+package fr.rext.retropcadvisor.domain.model.hardware.storage;
 
 /**
  * Capacité de stockage exprimée en mégabyte.

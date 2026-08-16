@@ -1,12 +1,9 @@
-package fr.rext.retropcadvisor.domain.model;
+package fr.rext.retropcadvisor.domain.model.hardware;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import fr.rext.retropcadvisor.domain.model.hardware.GenericHardwareComponent;
-import fr.rext.retropcadvisor.domain.model.hardware.HardwareComponentType;
 import fr.rext.retropcadvisor.domain.model.hardware.storage.StorageCapacity;
-import fr.rext.retropcadvisor.domain.model.hardware.StorageDevice;
 import java.util.UUID;
 import org.junit.jupiter.api.Test;
 

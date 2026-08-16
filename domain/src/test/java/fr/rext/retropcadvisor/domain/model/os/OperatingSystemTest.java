@@ -1,8 +1,7 @@
-package fr.rext.retropcadvisor.domain.model;
+package fr.rext.retropcadvisor.domain.model.os;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import fr.rext.retropcadvisor.domain.model.os.OperatingSystem;
 import org.junit.jupiter.api.Test;
 
 class OperatingSystemTest {

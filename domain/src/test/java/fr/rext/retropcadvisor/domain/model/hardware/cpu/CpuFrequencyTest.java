@@ -1,9 +1,8 @@
-package fr.rext.retropcadvisor.domain.model;
+package fr.rext.retropcadvisor.domain.model.hardware.cpu;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import fr.rext.retropcadvisor.domain.model.hardware.cpu.CpuFrequency;
 import org.junit.jupiter.api.Test;
 
 class CpuFrequencyTest {

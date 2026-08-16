@@ -8,7 +8,8 @@ import java.util.UUID;
  * L'interface est scellée afin que le domaine maîtrise explicitement les différentes
  * représentations possibles d'un composant.
  */
-public sealed interface HardwareComponent permits GenericHardwareComponent, MemoryModule, Cpu {
+public sealed interface HardwareComponent permits Cpu, GenericHardwareComponent, MemoryModule,
+    StorageDevice {
 
   UUID id();
 

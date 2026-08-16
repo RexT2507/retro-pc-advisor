@@ -4,7 +4,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 /**
- * Représentation générique d'un composant qui ne possède par encore de modèle métier spécialisé.
+ * Représentation générique d'un composant qui ne possède pas encore de modèle métier spécialisé.
  */
 public record GenericHardwareComponent(
     UUID id,
@@ -20,20 +20,35 @@ public record GenericHardwareComponent(
     Objects.requireNonNull(model, "model must not be null");
 
     if (manufacturer.isBlank()) {
-      throw new IllegalArgumentException("manufacturer must not be blank");
+      throw new IllegalArgumentException(
+          "manufacturer must not be blank"
+      );
     }
 
     if (model.isBlank()) {
-      throw new IllegalArgumentException("model must not be blank");
+      throw new IllegalArgumentException(
+          "model must not be blank"
+      );
     }
 
-    // Empêche de contourner le modèle en créant une mémoire générique sans capacité.
-    if (type == HardwareComponentType.MEMORY) {
-      throw new IllegalArgumentException("memory components must use MemoryModule");
-    }
+    // Les composants disposant d'un modèle métier spécialisé
+    // ne peuvent plus être représentés comme composants génériques.
+    switch (type) {
+      case MEMORY -> throw new IllegalArgumentException(
+          "memory components must use MemoryModule"
+      );
 
-    if (type == HardwareComponentType.CPU) {
-      throw new IllegalArgumentException("cpu components must use Cpu");
+      case CPU -> throw new IllegalArgumentException(
+          "cpu components must use Cpu"
+      );
+
+      case STORAGE -> throw new IllegalArgumentException(
+          "storage components must use StorageDevice"
+      );
+
+      default -> {
+        // Ce type ne possède pas encore de modèle métier spécialisé.
+      }
     }
   }
 }

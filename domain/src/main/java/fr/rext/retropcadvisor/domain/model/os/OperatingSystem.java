@@ -1,4 +1,4 @@
-package fr.rext.retropcadvisor.domain.model;
+package fr.rext.retropcadvisor.domain.model.os;
 
 /**
  * Systèmes d'exploitation actuellement pris en charge par le moteur de recommandation.

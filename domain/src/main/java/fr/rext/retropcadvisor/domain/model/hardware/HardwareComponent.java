@@ -1,4 +1,4 @@
-package fr.rext.retropcadvisor.domain.model;
+package fr.rext.retropcadvisor.domain.model.hardware;
 
 import java.util.UUID;
 

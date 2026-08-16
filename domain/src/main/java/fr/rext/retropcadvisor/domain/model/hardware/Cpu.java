@@ -1,23 +1,21 @@
-package fr.rext.retropcadvisor.domain.model;
+package fr.rext.retropcadvisor.domain.model.hardware;
 
+import fr.rext.retropcadvisor.domain.model.hardware.cpu.CpuFrequency;
 import java.util.Objects;
 import java.util.UUID;
 
-/**
- * Disque de stockage installable dans une configuration PC.
- */
-public record StorageDevice(
+public record Cpu(
     UUID id,
     String manufacturer,
     String model,
-    StorageCapacity capacity
+    CpuFrequency frequency
 ) implements HardwareComponent {
 
-  public StorageDevice {
+  public Cpu {
     Objects.requireNonNull(id, "id must not be null");
     Objects.requireNonNull(manufacturer, "manufacturer must not be null");
     Objects.requireNonNull(model, "model must not be null");
-    Objects.requireNonNull(capacity, "capacity must not be null");
+    Objects.requireNonNull(frequency, "frequency must not be null");
 
     if (manufacturer.isBlank()) {
       throw new IllegalArgumentException("manufacturer must not be blank");
@@ -28,14 +26,8 @@ public record StorageDevice(
     }
   }
 
-  /**
-   * Le type est imposé par la nature de l'objet.
-   * <p>
-   * Il n'est donc pas fourni par l'appelant, ce qui empêche de créer un StorageDevice déclaré comme
-   * CPU ou GPU.
-   */
   @Override
   public HardwareComponentType type() {
-    return HardwareComponentType.STORAGE;
+    return HardwareComponentType.CPU;
   }
 }

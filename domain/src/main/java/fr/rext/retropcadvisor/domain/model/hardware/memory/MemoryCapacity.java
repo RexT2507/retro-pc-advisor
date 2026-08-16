@@ -1,4 +1,4 @@
-package fr.rext.retropcadvisor.domain.model;
+package fr.rext.retropcadvisor.domain.model.hardware.memory;
 
 /**
  * Quantité de mémoire exprimée en mégaoctets.

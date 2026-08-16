@@ -1,5 +1,10 @@
-package fr.rext.retropcadvisor.domain.model;
+package fr.rext.retropcadvisor.domain.model.configuration;
 
+import fr.rext.retropcadvisor.domain.model.hardware.HardwareComponent;
+import fr.rext.retropcadvisor.domain.model.hardware.HardwareComponentType;
+import fr.rext.retropcadvisor.domain.model.hardware.Cpu;
+import fr.rext.retropcadvisor.domain.model.hardware.memory.MemoryCapacity;
+import fr.rext.retropcadvisor.domain.model.hardware.MemoryModule;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;

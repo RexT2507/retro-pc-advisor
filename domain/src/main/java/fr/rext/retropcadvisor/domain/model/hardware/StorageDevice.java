@@ -1,19 +1,20 @@
-package fr.rext.retropcadvisor.domain.model;
+package fr.rext.retropcadvisor.domain.model.hardware;
 
+import fr.rext.retropcadvisor.domain.model.hardware.storage.StorageCapacity;
 import java.util.Objects;
 import java.util.UUID;
 
 /**
- * Barette de mémoire installable dans une configuration PC.
+ * Disque de stockage installable dans une configuration PC.
  */
-public record MemoryModule(
+public record StorageDevice(
     UUID id,
     String manufacturer,
     String model,
-    MemoryCapacity capacity
+    StorageCapacity capacity
 ) implements HardwareComponent {
 
-  public MemoryModule {
+  public StorageDevice {
     Objects.requireNonNull(id, "id must not be null");
     Objects.requireNonNull(manufacturer, "manufacturer must not be null");
     Objects.requireNonNull(model, "model must not be null");
@@ -31,11 +32,11 @@ public record MemoryModule(
   /**
    * Le type est imposé par la nature de l'objet.
    * <p>
-   * Il n'est donc pas fourni par l'appelant, ce qui empêche de créer un MemoryModule déclaré comme
+   * Il n'est donc pas fourni par l'appelant, ce qui empêche de créer un StorageDevice déclaré comme
    * CPU ou GPU.
    */
   @Override
   public HardwareComponentType type() {
-    return HardwareComponentType.MEMORY;
+    return HardwareComponentType.STORAGE;
   }
 }

@@ -1,8 +1,9 @@
-package fr.rext.retropcadvisor.domain.model;
+package fr.rext.retropcadvisor.domain.model.hardware;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import fr.rext.retropcadvisor.domain.model.hardware.memory.MemoryCapacity;
 import java.util.UUID;
 import org.junit.jupiter.api.Test;
 

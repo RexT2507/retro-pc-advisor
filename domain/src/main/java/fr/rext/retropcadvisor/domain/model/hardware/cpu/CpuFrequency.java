@@ -1,4 +1,4 @@
-package fr.rext.retropcadvisor.domain.model;
+package fr.rext.retropcadvisor.domain.model.hardware.cpu;
 
 /**
  * Fréquence d'un processeur exprimée en mégahertz.

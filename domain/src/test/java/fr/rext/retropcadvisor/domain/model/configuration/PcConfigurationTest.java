@@ -3,6 +3,13 @@ package fr.rext.retropcadvisor.domain.model;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import fr.rext.retropcadvisor.domain.model.configuration.PcConfiguration;
+import fr.rext.retropcadvisor.domain.model.hardware.HardwareComponent;
+import fr.rext.retropcadvisor.domain.model.hardware.HardwareComponentType;
+import fr.rext.retropcadvisor.domain.model.hardware.cpu.Cpu;
+import fr.rext.retropcadvisor.domain.model.hardware.cpu.CpuFrequency;
+import fr.rext.retropcadvisor.domain.model.hardware.memory.MemoryCapacity;
+import fr.rext.retropcadvisor.domain.model.hardware.memory.MemoryModule;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;

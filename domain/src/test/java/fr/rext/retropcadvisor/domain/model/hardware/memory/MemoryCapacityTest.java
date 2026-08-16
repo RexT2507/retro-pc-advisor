@@ -3,6 +3,7 @@ package fr.rext.retropcadvisor.domain.model;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import fr.rext.retropcadvisor.domain.model.hardware.memory.MemoryCapacity;
 import org.junit.jupiter.api.Test;
 
 class MemoryCapacityTest {

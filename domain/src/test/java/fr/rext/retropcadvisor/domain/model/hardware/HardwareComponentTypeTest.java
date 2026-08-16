@@ -2,6 +2,7 @@ package fr.rext.retropcadvisor.domain.model;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import fr.rext.retropcadvisor.domain.model.hardware.HardwareComponentType;
 import org.junit.jupiter.api.Test;
 
 class HardwareComponentTypeTest {

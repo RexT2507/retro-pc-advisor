@@ -3,6 +3,10 @@ package fr.rext.retropcadvisor.domain.model;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import fr.rext.retropcadvisor.domain.model.hardware.GenericHardwareComponent;
+import fr.rext.retropcadvisor.domain.model.hardware.HardwareComponentType;
+import fr.rext.retropcadvisor.domain.model.hardware.memory.MemoryCapacity;
+import fr.rext.retropcadvisor.domain.model.hardware.MemoryModule;
 import java.util.UUID;
 import org.junit.jupiter.api.Test;
 

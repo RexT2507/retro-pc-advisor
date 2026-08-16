@@ -1,5 +1,7 @@
-package fr.rext.retropcadvisor.domain.model;
+package fr.rext.retropcadvisor.domain.model.hardware.cpu;
 
+import fr.rext.retropcadvisor.domain.model.hardware.HardwareComponent;
+import fr.rext.retropcadvisor.domain.model.hardware.HardwareComponentType;
 import java.util.Objects;
 import java.util.UUID;
 
